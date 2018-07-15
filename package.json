@@ -1,0 +1,22 @@
+{
+  "name": "moodboard",
+  "version": "0.0.1",
+  "description": "Bored",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "moodboard"
+  ],
+  "author": "Donny",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "knex": "^0.15.0",
+    "morgan": "^1.9.0",
+    "pg": "^7.4.3"
+  }
+}
