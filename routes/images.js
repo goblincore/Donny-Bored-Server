@@ -3,7 +3,6 @@
 const express = require('express');
 const knex = require('../knex');
 const router = express.Router();
-//const hydrateNotes = require('../utils/hydrateNotes');
 
 /*--get--images--*/
 router.get('/', (req, res, next) => {
