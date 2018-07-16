@@ -11,16 +11,15 @@ const moodboard = (function () {
 
   function generateImagesList(list, currQuery) {
 
-
-    const listItems = list.map(item => `
-    <div class="col-xs-6 col-md-4 thumbnail"><img src="uploads/${item.imageurl}" ></div>`);
-    return [listItems].join('');
+    console.log('LIST' + list.length);
+    const listItems = list.map(item => `<div class="col-xs-6 col-md-4 thumbnail"><img src="uploads/${item.imageurl}" ></div>`);
+    return listItems.join('');
   }
 
 
   function handleNewImageSubmit(){
     $('.js-new-image-form').on('submit', event => {
-      event.preventDefault() 
+      event.preventDefault(); 
       console.log('CLICK HANDLER WORK');
     
 

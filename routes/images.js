@@ -16,7 +16,7 @@ const storage =   multer.diskStorage({
     // console.log(file);
     //get the file mimetype ie 'image/jpg' split and prefer the second value ie'jpg'
     const ext = file.mimetype.split('/')[1];
-    callback(null, file.fieldname + '-' + Date.now() + '.'+ext);
+    callback(null, file.fieldname + '-' + Date.now() + Math.floor(Math.random() * 6) + 1 +  '.'+ext);
   }
 });
 
@@ -60,9 +60,9 @@ router.get('/:id', (req, res, next) =>{
 router.post('/', (req,res, next) => {
   //upload files to local storage
   upload(req,res,function(err) {
-    console.log('THE BODY')
-    console.log(req.body);
-   // console.log(req.files);
+    console.log('THE BODY');
+    //console.log(req.body);
+    console.log(req.files);
     if(err) {
       return res.end('Error uploading file.');
     }
@@ -70,10 +70,6 @@ router.post('/', (req,res, next) => {
     //const {imageurl, position=[], dimensions=[]} = req.body;
     const uploadedImages = req.files;
     const storeImageArray = [];
-    const bothIds={
-      image_id : null,
-      moodboard_id : null,
-    };
 
     uploadedImages.forEach( image => {
      
@@ -90,39 +86,59 @@ router.post('/', (req,res, next) => {
       .insert(storeImageArray)
       .returning(['id','imageurl','position','dimensions'])
       .then((results) =>{
-        if(results){
-         
-         results.forEach( result => {
-          bothIds.image_id = result.id;
-          bothIds.moodboard_id = req.body.moodboard;
+    
+        console.log('INSERTING NEW');
+   
+        //hmm
+        // const newPicture = (newObject) => new Promise(r => insertInto(newObject));
+        // const start = async () => {
+        //   await Promise.all(results.forEach(async result => {
+        //        const newObject = {
+        //            image_id : result.id,
+        //            moodboard_id : req.body.moodboard
+        //        }
 
-         });
-          const result = results[0];
-          bothIds.image_id = result.id;
-          bothIds.moodboard_id = req.body.moodboard;
-          console.log('this results' + results);
+        //   //console.log('LOGGING IMAGE ID ASYNC' + newArray.length);
+        //    newPicture(newObject);
+          
+        //   }))
+        //   console.log('Done')
+        // }
+        // start();
+
+        results.forEach( result => {
+          const newObject = {
+            image_id : result.id,
+            moodboard_id : req.body.moodboard
+          };
+          console.log('FOR EACH' + result.id);
+          insertInto(newObject);
+
+        });
+
+      
+      
+        console.log('this results' + results);
 
 
-          res.location(`${req.originalURL}${result.id}`).status(201).json(result);  
-          return result;
-        } else{
-          next();
-        }
-      })
-      .then( () => {
-        knex('images_moodboard')
-          .insert(bothIds)
-          .returning()
-          .then( result => console.log(result));
+        res.status(201).json(results);  
+     
         
       })
+    
       .catch(err => next(err));
-
     
   });
   
 });//end post
 
+// /*async*/
+
+function insertInto(insertObject){
+  knex('images_moodboard')
+    .insert(insertObject)
+    .then(() => console.log('INSERTED BOTH IDS' +insertObject.image_id));
+}
 
 /*Delet an image*/
 

@@ -14,7 +14,7 @@ $(document).ready(function () {
   api.search('/api/moodboards/1')
     .then(([response]) => {
       store.images = response.images;
-      console.log(store.images);
+      console.log(response.images);
       moodboard.render();
     });
 
