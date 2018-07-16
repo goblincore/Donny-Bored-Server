@@ -2,21 +2,21 @@
 
 function hydrateNotes(input) {
   const hydrated = [], lookup = {};
-  for (let note of input) {
-    if (!lookup[note.id]) {
-      lookup[note.id] = note;
-      lookup[note.id].tags = [];
-      hydrated.push(lookup[note.id]);
+  for (let moodboard of input) {
+    if (!lookup[moodboard.id]) {
+      lookup[moodboard.id] = moodboard;
+      lookup[moodboard.id].images = [];
+      hydrated.push(lookup[moodboard.id]);
     }
   
-    if (note.tagId && note.tagName) {
-      lookup[note.id].tags.push({
-        id: note.tagId,
-        name: note.tagName
+    if (moodboard.imageId && moodboard.imageUrl) {
+      lookup[moodboard.id].images.push({
+        id: moodboard.imageId,
+        imageurl: moodboard.imageUrl
       });
     }
-    delete lookup[note.id].tagId;
-    delete lookup[note.id].tagName;
+    delete lookup[moodboard.id].imageId;
+    delete lookup[moodboard.id].imageUrl;
   }
   return hydrated;
 }
