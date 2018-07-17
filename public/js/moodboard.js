@@ -4,9 +4,11 @@
 const moodboard = (function () {
 
   function render() {
+    
     const imagesList = generateImagesList(store.images, store.currentQuery);
     $('.js-images-list').html(imagesList);
     console.log('render');
+    console.log('RENDER CALLED');
   }
 
   function generateImagesList(list, currQuery) {

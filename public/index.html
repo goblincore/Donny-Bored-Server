@@ -7,10 +7,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="css/dropzone.css">
   </head>
   <body>
     <div class="container">
-    <form id="uploadForm"
+    <!-- <form id="uploadForm"
           enctype="multipart/form-data"
           action="/api/images"
           method="post"
@@ -28,7 +29,9 @@
     </form>
 
 
-    </div> 
+    </div>  -->
+
+    <form action="/upload-target" class="dropzone"></form>
       <div class="js-images-list"></div>
     
 
@@ -40,7 +43,7 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js" integrity="sha256-ABVkpwb9K9PxubvRrHMkk6wmWcIHUE9eBxNZLXYQ84k="
   crossorigin="anonymous"></script>
-
+  <script type="text/javascript" src="js/dropzone.js"></script>
   <script type="text/javascript" src="js/api.js"></script>
   <script type="text/javascript" src="js/store.js"></script>
   <script type="text/javascript" src="js/moodboard.js"></script>
@@ -55,10 +58,20 @@
             error: function(xhr) {
           status('Error: ' + xhr.status);
             },
-            success: function(response) {
-                location.reload();
-        console.log(response);
-            $("#status").empty().text(response);
+            success: (response) =>{
+            //  console.
+              //  location.reload();
+               console.log(response.length);
+               // store.images = response.images;
+              
+               console.log('Upload Successful!');
+                api.search('/api/moodboards/1')
+            .then(([response]) => {
+              store.images = response.images;
+              console.log(response.images);
+              moodboard.render();
+            });
+            $("#status").empty().text(`${response.length} Images uploaded`);
             }
     });
     return false;

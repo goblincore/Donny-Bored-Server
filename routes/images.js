@@ -63,6 +63,12 @@ router.post('/', (req,res, next) => {
     console.log('THE BODY');
     //console.log(req.body);
     console.log(req.files);
+
+    // if(!req.file){
+    //   console.log('NO FILE');
+    //  // return   res.status(400).end('NO FILE UPLOADED');
+    // }
+
     if(err) {
       return res.end('Error uploading file.');
     }
