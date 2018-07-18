@@ -73,7 +73,7 @@
   </style>
   </head>
   <body>
-    <div class="container">
+   <!-- <div class="container">
      <form id="uploadForm"
           enctype="multipart/form-data"
           action="/api/images"
@@ -92,14 +92,14 @@
     </form>
 
 
-    </div> 
-    <!-- <div class="container" id="container">
+    </div>  -->
+    <div class="container" id="container">
      
       <div id="actions" class="row">
     
         <div class="col-lg-7">
             <h3>M ☺ ☹ D B O A R D</h3>
-     
+          <!-- The fileinput-button span is used to style the file input field as button -->
           <span class="btn fileinput-button">
               <i class="glyphicon glyphicon-plus"></i>
               <span>Add Images...</span>
@@ -115,7 +115,7 @@
         </div>
   
         <div class="col-lg-5">
-       
+          <!-- The global file processing state -->
           <span class="fileupload-process">
             <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
               <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
@@ -135,7 +135,7 @@
       <div class="table table-striped files" id="previews">
   
         <div id="template">
-         
+          <!-- This is used as the file preview template -->
           <div class="col-xs-6 col-md-4 thumbnail">
              <img data-dz-thumbnail />
           </div>
@@ -163,10 +163,17 @@
                       <span>Delete</span>
                     </button>
                   </div>
-        </div> -->
+        </div>
   
     
-      <div class="js-images-list"></div>
+  
+      <script>
+     
+  
+      </script>
+  
+
+      <!--<div class="js-images-list"></div>-->
     
 
   </body>
@@ -186,57 +193,54 @@
   <script>
       
   $(document).ready(function() {
-      //  // Get the template HTML and remove it from the doument
-      //  var previewNode = document.querySelector("#template");
-      //   previewNode.id = "";
-      //   var previewTemplate = previewNode.parentNode.innerHTML;
-      //   previewNode.parentNode.removeChild(previewNode);
+       // Get the template HTML and remove it from the doument
+       var previewNode = document.querySelector("#template");
+        previewNode.id = "";
+        var previewTemplate = previewNode.parentNode.innerHTML;
+        previewNode.parentNode.removeChild(previewNode);
   
-      //   var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-      //     url: "/api/images", // Set the url
-      //     thumbnailWidth: null,
-      //     thumbnailHeight: null,
-      //     parallelUploads: 20,
-      //     previewTemplate: previewTemplate,
-      //     autoQueue: false, // Make sure the files aren't queued until manually added
-      //     previewsContainer: "#previews", // Define the container to display the previews
-      //     clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
-      //     accept : function(file, done) {
-      //           console.log('test';)
-      //     }
-      //   });
+        var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+          url: "/api/images", // Set the url
+          thumbnailWidth: null,
+          thumbnailHeight: null,
+          parallelUploads: 20,
+          previewTemplate: previewTemplate,
+          autoQueue: false, // Make sure the files aren't queued until manually added
+          previewsContainer: "#previews", // Define the container to display the previews
+          clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+        });
   
-      //   myDropzone.on("addedfile", function(file) {
-      //     // Hookup the start button
-      //     file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file); };
-      //   });
+        myDropzone.on("addedfile", function(file) {
+          // Hookup the start button
+          file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file); };
+        });
   
-      //   // Update the total progress bar
-      //   myDropzone.on("totaluploadprogress", function(progress) {
-      //     document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
-      //   });
+        // Update the total progress bar
+        myDropzone.on("totaluploadprogress", function(progress) {
+          document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
+        });
   
-      //   myDropzone.on("sending", function(file) {
-      //     // Show the total progress bar when upload starts
-      //     document.querySelector("#total-progress").style.opacity = "1";
-      //     // And disable the start button
-      //     file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
-      //   });
+        myDropzone.on("sending", function(file) {
+          // Show the total progress bar when upload starts
+          document.querySelector("#total-progress").style.opacity = "1";
+          // And disable the start button
+          file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+        });
   
-      //   // Hide the total progress bar when nothing's uploading anymore
-      //   myDropzone.on("queuecomplete", function(progress) {
-      //     document.querySelector("#total-progress").style.opacity = "0";
-      //   });
+        // Hide the total progress bar when nothing's uploading anymore
+        myDropzone.on("queuecomplete", function(progress) {
+          document.querySelector("#total-progress").style.opacity = "0";
+        });
   
-      //   // Setup the buttons for all transfers
-      //   // The "add files" button doesn't need to be setup because the config
-      //   // `clickable` has already been specified.
-      //   document.querySelector("#actions .start").onclick = function() {
-      //     myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
-      //   };
-      //   document.querySelector("#actions .cancel").onclick = function() {
-      //     myDropzone.removeAllFiles(true);
-      //   };
+        // Setup the buttons for all transfers
+        // The "add files" button doesn't need to be setup because the config
+        // `clickable` has already been specified.
+        document.querySelector("#actions .start").onclick = function() {
+          myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+        };
+        document.querySelector("#actions .cancel").onclick = function() {
+          myDropzone.removeAllFiles(true);
+        };
   
   
   
@@ -245,14 +249,14 @@
         // Now fake the file upload, since GitHub does not handle file uploads
         // and returns a 404
   
-        // var minSteps = 6,
-        //     maxSteps = 60,
-        //     timeBetweenSteps = 100,
-        //     bytesPerStep = 100000;
+        var minSteps = 6,
+            maxSteps = 60,
+            timeBetweenSteps = 100,
+            bytesPerStep = 100000;
   
-        // myDropzone.uploadFiles = function(files) {
-        //   var self = this;
-        //    console.log('uploading? dropzone test' + files);
+        myDropzone.uploadFiles = function(files) {
+          var self = this;
+           console.log('uploading? dropzone test' + files);
           // for (var i = 0; i < files.length; i++) {
   
           //   var file = files[i];
@@ -279,9 +283,9 @@
           //     }(file, totalSteps, step), duration);
           //   }
          // }
-      //  }
+        }
     
-    $('#uploadForm').submit(function() {
+    /*$('#uploadForm').submit(function() {
         $("#status").empty().text("File is uploading...");
         $(this).ajaxSubmit({
             error: function(xhr) {
@@ -304,8 +308,57 @@
             }   
     });
     return false;
-    });    
+    });   */ 
 
+//DROP ZONEZ 
+
+// var previewNode = document.querySelector("#template");
+// previewNode.id = "";
+// var previewTemplate = previewNode.parentNode.innerHTML;
+// previewNode.parentNode.removeChild(previewNode);
+
+// var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+//   url: "/target-url", // Set the url
+//   thumbnailWidth: 80,
+//   thumbnailHeight: 80,
+//   parallelUploads: 20,
+//   previewTemplate: previewTemplate,
+//   autoQueue: false, // Make sure the files aren't queued until manually added
+//   previewsContainer: "#previews", // Define the container to display the previews
+//   clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+// });
+
+// myDropzone.on("addedfile", function(file) {
+//   // Hookup the start button
+//   file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file); };
+// });
+
+// // Update the total progress bar
+// myDropzone.on("totaluploadprogress", function(progress) {
+//   document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
+// });
+
+// myDropzone.on("sending", function(file) {
+//   // Show the total progress bar when upload starts
+//   document.querySelector("#total-progress").style.opacity = "1";
+//   // And disable the start button
+//   file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+// });
+
+// // Hide the total progress bar when nothing's uploading anymore
+// myDropzone.on("queuecomplete", function(progress) {
+//   document.querySelector("#total-progress").style.opacity = "0";
+// });
+
+// // Setup the buttons for all transfers
+// // The "add files" button doesn't need to be setup because the config
+// // `clickable` has already been specified.
+// document.querySelector("#actions .start").onclick = function() {
+//   myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+// };
+// document.querySelector("#actions .cancel").onclick = function() {
+//   myDropzone.removeAllFiles(true);
+// };
 
 
 });
