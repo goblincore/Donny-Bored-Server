@@ -60,9 +60,10 @@ router.get('/:id', (req, res, next) =>{
 router.post('/', (req,res, next) => {
   //upload files to local storage
   upload(req,res,function(err) {
-    console.log('THE BODY');
-    //console.log(req.body);
-    console.log(req.files);
+    console.log('Request body:');
+    console.log(req.body);
+   
+    //console.log(req.files);
 
     // if(!req.file){
     //   console.log('NO FILE');
@@ -74,6 +75,7 @@ router.post('/', (req,res, next) => {
     }
     //then add url to database
     //const {imageurl, position=[], dimensions=[]} = req.body;
+ 
     const uploadedImages = req.files;
     const storeImageArray = [];
 
@@ -95,27 +97,10 @@ router.post('/', (req,res, next) => {
     
         console.log('INSERTING NEW');
    
-        //hmm
-        // const newPicture = (newObject) => new Promise(r => insertInto(newObject));
-        // const start = async () => {
-        //   await Promise.all(results.forEach(async result => {
-        //        const newObject = {
-        //            image_id : result.id,
-        //            moodboard_id : req.body.moodboard
-        //        }
-
-        //   //console.log('LOGGING IMAGE ID ASYNC' + newArray.length);
-        //    newPicture(newObject);
-          
-        //   }))
-        //   console.log('Done')
-        // }
-        // start();
-
         results.forEach( result => {
           const newObject = {
             image_id : result.id,
-            moodboard_id : req.body.moodboard
+            moodboard_id : req.body.moodboard_id
           };
           console.log('FOR EACH' + result.id);
           insertInto(newObject);
@@ -128,8 +113,7 @@ router.post('/', (req,res, next) => {
 
 
         res.status(201).json(results);  
-     
-        
+    
       })
     
       .catch(err => next(err));
@@ -138,7 +122,6 @@ router.post('/', (req,res, next) => {
   
 });//end post
 
-// /*async*/
 
 function insertInto(insertObject){
   knex('images_moodboard')
