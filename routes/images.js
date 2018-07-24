@@ -4,6 +4,15 @@ const express = require('express');
 const knex = require('../knex');
 const router = express.Router();
 const multer = require('multer');
+//const cloudinary = require('cloudinary');
+
+//cloudinary config
+// cloudinary.config({
+//   cloud_name: 'moodimagescloud',
+//   api_key: '876357248326192',
+//   api_secret: 'xh8klIJpldYJNOJFG6lZO6fkbco',
+// });
+
 
 
 /*multer setup*/
@@ -19,6 +28,7 @@ const storage =   multer.diskStorage({
     callback(null, file.fieldname + '-' + Date.now() + Math.floor(Math.random() * 6) + 1 +  '.'+ext);
   }
 });
+
 
 
 const upload = multer({ storage : storage }).array('photos',10);
@@ -53,6 +63,7 @@ router.get('/:id', (req, res, next) =>{
     .catch(err => next(err));
       
 });
+
 
 
 /*create an image using post method*/

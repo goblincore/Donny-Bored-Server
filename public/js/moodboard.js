@@ -14,7 +14,7 @@ const moodboard = (function () {
   function generateImagesList(list, currQuery) {
 
     console.log('LIST' + list.length);
-    const listItems = list.map(item => `<div class="col-xs-6 col-md-4 thumbnail"><img src="uploads/${item.imageurl}" ></div>`);
+    const listItems = list.map(item => `<div class="col-xs-6 col-md-4 thumbnail"><img src="${item.imageurl}" ></div>`);
     return listItems.join('');
   }
 
