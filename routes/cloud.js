@@ -23,51 +23,51 @@ const storage = multer.memoryStorage( {
   }
 });
 // const upload = multer({ storage });
-const upload = multer({ storage : storage }).array('photos',10);
+const upload = multer({ storage : storage }).single('file');
 
 router.post('/', (req,res, next) => {
   //upload files to temp buffer
   upload(req,res,function(err) {
     console.log('Request files:');
     //console.log(req.body);
-    console.log(req.files);
+    console.log(req.file);
     // console.log('REQ FILE BUFFER TEST' + req.files[0].buffer);
     // const file = req.files[0];
     // Upload image on Cloudinary (using streams).
-    req.files.forEach( file => {
-      cloudinary.v2.uploader
-        .upload_stream({ resource_type: 'image' }, (error, result) => { 
-          console.log(result);
+    // req.files.forEach( file => {
+    cloudinary.v2.uploader
+      .upload_stream({ resource_type: 'image' }, (error, result) => { 
+        console.log(result);
 
-          //write to database
-          const newImage = {
-            imageurl : `${result.url}`, 
-            position : [500,500], 
-            dimensions : [`${result.width}`,`${result.height}`]
-          };
+        //write to database
+        const newImage = {
+          imageurl : `${result.url}`, 
+          position : [500,500], 
+          dimensions : [`${result.width}`,`${result.height}`]
+        };
 
-          knex
-            .insert(newImage)
-            .into('images')
-            .returning(['id','imageurl','position','dimensions'])
-            .then(([result]) =>{
-              console.log('testing insertion into database');
-              const newObject = {
-                image_id : result.id,
-                moodboard_id : req.body.moodboard_id
-              };
-              knex('images_moodboard')
-                .insert(newObject)
-                .returning(['image_id','moodboard_id'])
-                .then((result) => {
-                  console.log('INSERTED BOTH IDS' +newObject.image_id);
-                  res.status(201).json(result);
-                }); 
-            })
-            .catch(err => next(err));            
-        })
-        .end(file.buffer);
-    });
+        knex
+          .insert(newImage)
+          .into('images')
+          .returning(['id','imageurl','position','dimensions'])
+          .then(([result]) =>{
+            console.log('testing insertion into database');
+            const newObject = {
+              image_id : result.id,
+              moodboard_id : req.body.moodboard_id
+            };
+            knex('images_moodboard')
+              .insert(newObject)
+              .returning(['image_id','moodboard_id'])
+              .then((result) => {
+                console.log('INSERTED BOTH IDS' +newObject.image_id);
+                res.status(201).json(result);
+              }); 
+          })
+          .catch(err => next(err));            
+      })
+      .end(req.file.buffer);
+    // });
   });
    
     
