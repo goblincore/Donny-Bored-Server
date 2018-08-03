@@ -31,6 +31,8 @@ router.post('/', (req,res, next) => {
     console.log('Request files:');
     //console.log(req.body);
     console.log(req.file);
+
+    console.log('REQBODY',req.body);
     // console.log('REQ FILE BUFFER TEST' + req.files[0].buffer);
     // const file = req.files[0];
     // Upload image on Cloudinary (using streams).
