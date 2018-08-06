@@ -1,27 +1,38 @@
 'use strict';
-
+// psql -U dev dev-moodboards-app
 //Required
 const express = require('express');
 const router = express.Router();
 const knex = require('../knex');
+const hydrate = require('../utils/hydration');
+const passport = require('passport');
 
+router.use('/', passport.authenticate('jwt', { session: false, failWithError: true }));
 
-
-//Get all moodboards for a user
+//Get all moodboards and associated user and images
 
 router.get('/', (req,res,next) => {
   const userId = req.query.user_id;
+  console.log('THIS IS THE USER ID IMPORTANT',userId);
 
-  knex.select('moodboards.id','board_name','user_id','users.username')
+  knex
+    .select('moodboards.id','board_name','user_id','users.username','images.id as imageId', 'images.imageurl as imageUrl')
     .from('moodboards')
     .leftJoin('users','moodboards.user_id','users.id')
+    .leftJoin('images_moodboard','moodboards.id','images_moodboard.moodboard_id')
+    .leftJoin('images','images_moodboard.image_id','images.id')
     .modify(function(queryBuilder){
       if(userId){
         queryBuilder.where('user_id',userId);
       }
     })
-    .then(results => {
-      res.json(results);
+    .then(result => {
+      if (result) {
+        const hydrated = hydrate(result);
+        res.json(hydrated);
+      } else {
+        next();
+      }
     })
     .catch(err => next(err));
 });
@@ -30,13 +41,18 @@ router.get('/', (req,res,next) => {
 //Get moodboard by ID
 router.get('/:id', (req,res,next) => {
   const {id} = req.params;
-  knex.select()
+  knex
+    .select('moodboards.id','board_name','user_id','users.username','images.id as imageId', 'images.imageurl as imageUrl', 'images.position as imagePosition', 'images.dimensions as imageDimensions')
+    .leftJoin('users','moodboards.user_id','users.id')
+    .leftJoin('images_moodboard','moodboards.id','images_moodboard.moodboard_id')
+    .leftJoin('images','images_moodboard.image_id','images.id')
     .from('moodboards')
-    .where('id',id)
-    .then(([moodboard]) =>{
-      if(moodboard){
-        res.json(moodboard);
-      } else{
+    .where('moodboards.id',id)
+    .then((result) => {
+      if (result) {
+        const hydrated = hydrate(result);
+        res.json(hydrated);
+      } else {
         next();
       }
     })

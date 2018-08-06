@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS images;
 DROP TABLE IF EXISTS moodboards;
-
+-- psql -U dev dev-moodboards-app
 --PRIMARY DATA TABLES
 CREATE TABLE users(
       id serial PRIMARY KEY,
@@ -105,7 +105,7 @@ INSERT INTO images(imageURL,position,dimensions)
 
 
 INSERT INTO images_moodboard(image_id,moodboard_id)
-    VALUES(
+    VALUES
         (1,2),
         (1,3),
         (1,4),
@@ -116,7 +116,7 @@ INSERT INTO images_moodboard(image_id,moodboard_id)
         (6,3),
         (7,2),
         (8,2),
-        (9,2)
-    );
+        (9,2);
+ 
 
 
