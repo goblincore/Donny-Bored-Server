@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const {PORT}=require('./config');
 const passport=require('passport');
-const {CLIENT_ORIGIN}=require('./config');
+//const {CLIENT_ORIGIN}=require('./config');
 
 
 //Routers
@@ -27,7 +27,7 @@ app.use(express.static('public'));
 
 //Enable CORS support
 app.use(cors({
-  origin: CLIENT_ORIGIN
+  origin: 'https://moodboredangel64.herokuapp.com'
 }));
 
 
