@@ -6,7 +6,7 @@ const { Strategy: LocalStrategy } = require('passport-local');
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 const knex = require('../knex');
 
-const { JWT_SECRET } = require('../config');
+const JWT_SECRET = require('../config');
 
 const localStrategy = new LocalStrategy((username, password, callback) => {
   let user;
@@ -41,6 +41,7 @@ const localStrategy = new LocalStrategy((username, password, callback) => {
       return callback(err, false);
     });
 
+    
 
 
 //   User.findOne({ username: username })

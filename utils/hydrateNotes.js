@@ -9,13 +9,17 @@ function hydrateNotes(input) {
       hydrated.push(lookup[moodboard.id]);
     }
   
-    if (moodboard.imageId && moodboard.imageUrl) {
+    if (moodboard.imageId && moodboard.imageUrl && moodboard.imagePosition && moodboard.imageDimensions ) {
       lookup[moodboard.id].images.push({
         id: moodboard.imageId,
-        imageurl: moodboard.imageUrl
+        imageurl: moodboard.imageUrl,
+        position:moodboard.imagePosition,
+        dimensions: moodboard.imageDimensions
       });
     }
     delete lookup[moodboard.id].imageId;
+    delete lookup[moodboard.id].imagePosition;
+    delete lookup[moodboard.id].imageDimensions;
     delete lookup[moodboard.id].imageUrl;
   }
   return hydrated;

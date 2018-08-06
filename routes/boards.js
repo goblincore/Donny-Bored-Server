@@ -40,7 +40,7 @@ router.get('/', (req,res,next) => {
 router.get('/:id', (req,res,next) => {
   const {id} = req.params;
   knex
-    .select('moodboards.id','board_name','user_id','users.username','images.id as imageId', 'images.imageurl as imageUrl')
+    .select('moodboards.id','board_name','user_id','users.username','images.id as imageId', 'images.imageurl as imageUrl', 'images.position as imagePosition', 'images.dimensions as imageDimensions')
     .leftJoin('users','moodboards.user_id','users.id')
     .leftJoin('images_moodboard','moodboards.id','images_moodboard.moodboard_id')
     .leftJoin('images','images_moodboard.image_id','images.id')
