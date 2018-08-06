@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const {PORT}=require('./config');
 const passport=require('passport');
+const CLIENT_ORIGIN=require('./config');
 
 
 //Routers
@@ -25,7 +26,9 @@ app.use(morgan('dev'));
 app.use(express.static('public'));
 
 //Enable CORS support
-app.use(cors());
+app.use(cors({
+  origin: CLIENT_ORIGIN
+}));
 
 //Parse request body
 app.use(express.json());
