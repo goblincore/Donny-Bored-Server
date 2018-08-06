@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config();
 //Required depndencies
 const express = require('express');
 const morgan = require('morgan');
@@ -39,7 +39,7 @@ app.use('/api/moodboards', moodboardsRouter);
 app.use('/api/users',usersRouter);
 app.use('/api/images',imagesRouter);
 app.use('/api/cloudinary',cloudRouter);
-app.use('/api/auth/', authRouter);
+app.use('/api/auth', authRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 

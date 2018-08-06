@@ -6,7 +6,6 @@ const router = express.Router();
 const knex = require('../knex');
 const hashPassword = require('../utils/helpers');
 
-
 //Get all Users
 
 router.get('/', (req,res,next) =>{

@@ -1,20 +1,31 @@
 'use strict';
+
 const { Strategy: LocalStrategy } = require('passport-local');
+
+const bcrypt = require('bcryptjs');
 
 // Assigns the Strategy export to the name JwtStrategy using object destructuring
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Assigning_to_new_variable_names
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 const knex = require('../knex');
 
-const JWT_SECRET = require('../config');
+
+const {JWT_SECRET} = require('../config');
+
+const validatePassword = function(password,userPassword) {
+  console.log('COMPARE',bcrypt.compare(password, userPassword));
+  return bcrypt.compare(password, userPassword);
+};
+
 
 const localStrategy = new LocalStrategy((username, password, callback) => {
   let user;
   knex.select()
     .from('users')
     .where('username',username)
-    .then(_user => {
+    .then(([_user]) => {
       user = _user;
+      console.log('USER FOUND',user);
       if (!user) {
         // Return a rejected promise so we break out of the chain of .thens.
         // Any errors like this will be handled in the catch block.
@@ -23,7 +34,7 @@ const localStrategy = new LocalStrategy((username, password, callback) => {
           message: 'Incorrect username or password'
         });
       }
-      return user.validatePassword(password);
+      return validatePassword(password,user.password);
     })
     .then(isValid => {
       if (!isValid) {
