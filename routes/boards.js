@@ -1,5 +1,5 @@
 'use strict';
-
+// psql -U dev dev-moodboards-app
 //Required
 const express = require('express');
 const router = express.Router();
@@ -12,6 +12,7 @@ const hydrateNotes = require('../utils/hydrateNotes');
 
 router.get('/', (req,res,next) => {
   const userId = req.query.user_id;
+  console.log('THIS IS THE USER ID IMPORTANT',userId);
 
   knex
     .select('moodboards.id','board_name','user_id','users.username','images.id as imageId', 'images.imageurl as imageUrl')

@@ -20,6 +20,7 @@ function serialize(user){
   return {
     username: user.username || '',
     email: user.email|| '',
+    id: user.id || ''
   };
 }
 const localAuth = passport.authenticate('local', {session: false});

@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS images;
 DROP TABLE IF EXISTS moodboards;
-
+-- psql -U dev dev-moodboards-app
 --PRIMARY DATA TABLES
 CREATE TABLE users(
       id serial PRIMARY KEY,
