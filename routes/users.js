@@ -149,7 +149,8 @@ router.post('/', (req, res, next) => {
   console.log(req.body);
   // Username and password 
 
-  return knex.select()
+  return knex
+    .select()
     .from('users')
     .count('username')
     .where('username',username)
@@ -158,13 +159,13 @@ router.post('/', (req, res, next) => {
       console.log('Count',count);
       if (count > 0) {
         // There is an existing user with the same username
-        console.log('username already taken');
-        // return Promise.reject({
-        //   code: 422,
-        //   reason: 'ValidationError',
-        //   message: 'Username already taken',
-        //   location: 'username'
-        // });
+       // console.log('username already taken');
+        return Promise.reject({
+          code: 422,
+          reason: 'ValidationError',
+          message: 'Username already taken',
+          location: 'username'
+        });
       }
       // If there is no existing user, hash the password
       return hashPassword(password,10);
@@ -183,27 +184,13 @@ router.post('/', (req, res, next) => {
         .into('users')
         .returning(['username','id'])
         .then(([result]) => {
-          res.json(result);
+          res.status(201).json(result);
 
         })
         .catch(err => next(err));
+      });
 
 
-
-    }); 
-
-    // const { board_name, user_id } = req.body;
-    // const newBoard = {
-    //   board_name, user_id
-    // };
-  
-    // knex.insert(newBoard)
-    //   .into('moodboards')
-    //   .returning(['id','board_name','user_id'])
-    //   .then(([result]) =>{
-    //     res.json(result);
-    //   })
-    //   .catch(err => next(err));
   
   
   // User.find({username})
