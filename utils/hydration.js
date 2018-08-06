@@ -1,6 +1,6 @@
 'use strict';
 
-function hydrateNotes(input) {
+function hydrate(input) {
   const hydrated = [], lookup = {};
   for (let moodboard of input) {
     if (!lookup[moodboard.id]) {
@@ -26,4 +26,4 @@ function hydrateNotes(input) {
 }
 
 
-module.exports = hydrateNotes;
+module.exports = hydrate;

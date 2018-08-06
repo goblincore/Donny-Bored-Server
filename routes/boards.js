@@ -4,9 +4,10 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('../knex');
-const hydrateNotes = require('../utils/hydrateNotes');
+const hydrate = require('../utils/hydration');
+const passport = require('passport');
 
-
+router.use('/', passport.authenticate('jwt', { session: false, failWithError: true }));
 
 //Get all moodboards and associated user and images
 
@@ -27,7 +28,7 @@ router.get('/', (req,res,next) => {
     })
     .then(result => {
       if (result) {
-        const hydrated = hydrateNotes(result);
+        const hydrated = hydrate(result);
         res.json(hydrated);
       } else {
         next();
@@ -49,7 +50,7 @@ router.get('/:id', (req,res,next) => {
     .where('moodboards.id',id)
     .then((result) => {
       if (result) {
-        const hydrated = hydrateNotes(result);
+        const hydrated = hydrate(result);
         res.json(hydrated);
       } else {
         next();
