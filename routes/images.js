@@ -6,14 +6,6 @@ const router = express.Router();
 const multer = require('multer');
 //const cloudinary = require('cloudinary');
 
-//cloudinary config
-// cloudinary.config({
-//   cloud_name: 'moodimagescloud',
-//   api_key: '876357248326192',
-//   api_secret: 'xh8klIJpldYJNOJFG6lZO6fkbco',
-// });
-
-
 
 /*multer setup*/
 //define our path for local storage

@@ -3,29 +3,31 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const cloudinary = require('cloudinary');
+const config = require('../config');
 
 const knex = require('../knex');
 
 
 //cloudinary config
 cloudinary.config({
-  cloud_name: 'moodimagescloud',
-  api_key: '876357248326192',
-  api_secret: 'xh8klIJpldYJNOJFG6lZO6fkbco',
+  cloud_name: config.CLOUDINARY_NAME,
+  api_key: config.CLOUDINARY_API_KEY,
+  api_secret: config.CLOUDINARY_API_SECRET,
 });
 
 const storage = multer.memoryStorage( {
   filename: function (req, file, callback) {
     console.log('TESTING MEMORY STORAGE' + file);
     //get the file mimetype ie 'image/jpg' split and prefer the second value ie'jpg'
-    const ext = file.mimetype.split('/')[1];
-    callback(null, file.fieldname + '-' + Date.now() + Math.floor(Math.random() * 6) + 1 +  '.'+ext);
+    // const ext = file.mimetype.split('/')[1];
+    // callback(null, file.fieldname + '-' + Date.now() + Math.floor(Math.random() * 6) + 1 +  '.'+ext);
   }
 });
 // const upload = multer({ storage });
 const upload = multer({ storage : storage }).single('file');
 
 router.post('/', (req,res, next) => {
+  console.log('COUDINARY TEST',cloudinary.config());
   //upload files to temp buffer
   upload(req,res,function(err) {
     console.log('Request files:');
