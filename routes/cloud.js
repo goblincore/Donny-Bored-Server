@@ -4,8 +4,14 @@ const router = express.Router();
 const multer = require('multer');
 const cloudinary = require('cloudinary');
 const config = require('../config');
-
+const cors = require('cors');
 const knex = require('../knex');
+
+
+const {CLIENT_ORIGIN}=require('../config');
+router.use(cors({
+  origin: CLIENT_ORIGIN
+}));
 
 
 //cloudinary config

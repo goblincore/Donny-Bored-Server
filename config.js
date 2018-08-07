@@ -1,6 +1,6 @@
 'use strict';
 
-exports.CLIENT_ORIGIN=process.env.CLIENT_ORIGIN || 'http://localhost:9090';
+exports.CLIENT_ORIGIN=process.env.CLIENT_ORIGIN || 'http://localhost:3000';
 exports.PORT = process.env.PORT || 9090;
 exports.CLOUDINARY_API_KEY=process.env.CLOUDINARY_API_KEY;
 exports.CLOUDINARY_API_SECRET=process.env.CLOUDINARY_API_SECRET;
