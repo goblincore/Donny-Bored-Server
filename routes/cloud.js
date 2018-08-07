@@ -8,10 +8,7 @@ const cors = require('cors');
 const knex = require('../knex');
 
 
-const {CLIENT_ORIGIN}=require('../config');
-router.use(cors({
-  origin: CLIENT_ORIGIN
-}));
+
 
 
 //cloudinary config
