@@ -63,7 +63,7 @@ router.get('/:id', (req,res,next) => {
 
 //Update a moodboard
 router.put('/:id', (req,res,next) =>{
-  
+  console.log('UPDATE MOODBARD REQUEST',req);
   const {id} = req.params;
   const {board_name} = req.body;
   const updatedMoodboard = {
@@ -96,7 +96,6 @@ router.post('/', (req,res,next) => {
       res.json(result);
     })
     .catch(err => next(err));
-
 });
 
 //Delete a moodboard

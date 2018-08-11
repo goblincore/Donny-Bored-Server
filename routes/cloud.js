@@ -8,9 +8,6 @@ const cors = require('cors');
 const knex = require('../knex');
 
 
-
-
-
 //cloudinary config
 cloudinary.config({
   cloud_name: config.CLOUDINARY_NAME,
@@ -45,7 +42,11 @@ router.post('/', (req,res, next) => {
     cloudinary.v2.uploader
       .upload_stream({ resource_type: 'image' }, (error, result) => { 
         console.log(result);
-
+       
+        while(result.width > 500 || result.height > 600){
+          result.width = Math.floor(result.width*0.5);
+          result.height=Math.floor(result.height*0.5);
+        } 
         //write to database
         const newImage = {
           imageurl : `${result.url}`, 
