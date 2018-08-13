@@ -33,10 +33,17 @@ router.post('/', (req,res, next) => {
     console.log('Request files:');
     //console.log(req.body);
     console.log(req.file);
+    console.log('IMAGE POSITION',req.body.positionX,req.body.positionY);
 
-    console.log('REQBODY',req.body);
+    // console.log('REQBODY',req.body);
     // console.log('REQ FILE BUFFER TEST' + req.files[0].buffer);
     // const file = req.files[0];
+    let imageCoord;
+    if(req.body.position !== null || undefined){
+      // imageCoord=[parseInt(req.body.position[0]),parseInt(req.body.position[1])];
+    } else{
+      imageCoord=[0,0];
+    }
     // Upload image on Cloudinary (using streams).
     // req.files.forEach( file => {
     cloudinary.v2.uploader
@@ -50,7 +57,7 @@ router.post('/', (req,res, next) => {
         //write to database
         const newImage = {
           imageurl : `${result.url}`, 
-          position : [500,500], 
+          position : [req.body.positionX,req.body.positionY], 
           dimensions : [`${result.width}`,`${result.height}`]
         };
 
