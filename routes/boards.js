@@ -16,7 +16,7 @@ router.get('/', (req,res,next) => {
   console.log('THIS IS THE USER ID IMPORTANT',userId);
 
   knex
-    .select('moodboards.id','board_name','user_id','users.username','images.id as imageId', 'images.imageurl as imageUrl')
+    .select('moodboards.id','board_name','user_id','description','users.username','images.id as imageId', 'images.imageurl as imageUrl')
     .from('moodboards')
     .leftJoin('users','moodboards.user_id','users.id')
     .leftJoin('images_moodboard','moodboards.id','images_moodboard.moodboard_id')
@@ -65,9 +65,10 @@ router.get('/:id', (req,res,next) => {
 router.put('/:id', (req,res,next) =>{
   console.log('UPDATE MOODBARD REQUEST',req);
   const {id} = req.params;
-  const {board_name} = req.body;
+  const {board_name,description} = req.body;
   const updatedMoodboard = {
-    board_name 
+    board_name,
+    description
   };
 
   knex.select()
@@ -84,9 +85,9 @@ router.put('/:id', (req,res,next) =>{
 
 //Create a Moodboard
 router.post('/', (req,res,next) => {
-  const { board_name, user_id } = req.body;
+  const { board_name, user_id, description } = req.body;
   const newBoard = {
-    board_name, user_id
+    board_name, user_id, description
   };
 
   knex.insert(newBoard)

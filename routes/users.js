@@ -7,12 +7,15 @@ const knex = require('../knex');
 const hashPassword = require('../utils/helpers');
 
 //Get all Users
-
 router.get('/', (req,res,next) =>{
   knex.select('id','username','email')
     .from('users')
     .then(results => {
-      res.json(results);
+      if(results){
+        res.json(results);
+      } else {
+        next();
+      }
     })
     .catch(err => next(err));
 });
