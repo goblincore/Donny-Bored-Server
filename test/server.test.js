@@ -62,16 +62,36 @@ describe('404 handler', function () {
 });
 
 describe('Mocha and Chai', function() {
-    it('should be properly setup', function() {
-      expect(true).to.be.true;
-    });
+  it('should be properly setup', function() {
+    expect(true).to.be.true;
   });
+});
 
 
-  before(function() {
-    return dbConnect(TEST_DATABASE_URL);
-  });
+before(function() {
+  return dbConnect(TEST_DATABASE_URL);
+});
   
-  after(function() {
-    return dbDisconnect();
+after(function() {
+  return dbDisconnect();
+});
+
+describe('Static server', function () {
+
+  it('GET request "/" should return the index page', function () {
+    return chai.request(app)
+      .get('/')
+      .then(function (res) {
+        expect(res).to.exist;
+        expect(res).to.have.status(200);
+        expect(res).to.be.html;
+      });
   });
+
+});
+
+
+
+
+
+  

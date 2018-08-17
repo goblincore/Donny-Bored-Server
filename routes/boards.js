@@ -38,7 +38,7 @@ router.get('/', (req,res,next) => {
 });
 
 
-//Get moodboard by ID
+//Get moodboard by ID and associated images
 router.get('/:id', (req,res,next) => {
   const {id} = req.params;
   knex

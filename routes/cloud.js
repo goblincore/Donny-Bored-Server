@@ -13,6 +13,7 @@ cloudinary.config({
   cloud_name: config.CLOUDINARY_NAME,
   api_key: config.CLOUDINARY_API_KEY,
   api_secret: config.CLOUDINARY_API_SECRET,
+  secure:true
 });
 
 const storage = multer.memoryStorage( {
@@ -51,7 +52,7 @@ router.post('/', (req,res, next) => {
         } 
         //write to database
         const newImage = {
-          imageurl : `${result.url}`, 
+          imageurl : `${result.secure_url}`, 
           position : [req.body.positionX,req.body.positionY], 
           dimensions : [`${result.width}`,`${result.height}`]
         };

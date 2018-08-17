@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS images;
 DROP TABLE IF EXISTS moodboards;
 -- psql -U dev dev-moodboards-app
+--postgres://dygzount:ee6GtSt5m-P69rS4Y6tnhEDPf_HHXQQ7@pellefant.db.elephantsql.com:5432/dygzount
 --PRIMARY DATA TABLES
 CREATE TABLE users(
       id serial PRIMARY KEY,

@@ -6,8 +6,47 @@ const router = express.Router();
 
 //const cloudinary = require('cloudinary');
 
+/*get all images*/
+router.get('/', (req,res,next) =>{
+  knex.select()
+    .from('images')
+    .then(results =>{
+      res.json(results);
+    })
+    .catch(err => next(err));
+});
 
 
+
+// /*get all images from a certain moodboard*/
+
+router.get('/join/:id', (req,res,next) =>{
+  const {id} = req.params;
+  knex.select()
+    .from('images_moodboard')
+    .where('moodboard_id',id)
+    .then(results =>{
+      res.json(results);
+    })
+    .catch(err => next(err));
+});
+
+
+
+
+
+/*get particular image by id*/
+router.get('/:id', (req,res,next) =>{
+  const {id} = req.params;
+  knex.select()
+    .from('images')
+    .where('id',id)
+    .returning(['id','position','dimensions'])
+    .then(([result]) =>{
+      res.json(result);
+    })
+    .catch(err => next(err));
+});
 
 
 
@@ -32,28 +71,6 @@ router.put('/:id', (req,res,next) =>{
     })
     .catch(err => next(err));
 });
-
-
-// var knex = require('knex'),
-//     _ = require('underscore');
-
-// function bulkUpdate (records) {
-//       var updateQuery = [
-//           'INSERT INTO mytable (primaryKeyCol, col2, colN) VALUES',
-//           _.map(records, () => '(?)').join(','),
-//           'ON DUPLICATE KEY UPDATE',
-//           'col2 = VALUES(col2),',
-//           'colN = VALUES(colN)'
-//       ].join(' '),
-
-//       vals = [];
-
-//       _(records).map(record => {
-//           vals.push(_(record).values());
-//       });
-
-//       return knex.raw(updateQuery, vals);
-//  }
 
 
 
