@@ -43,9 +43,9 @@ router.get('/:id', (req,res,next) => {
 router.put('/:id', (req,res,next) =>{
   
   const {id} = req.params;
-  const {board_name} = req.body;
+  const {email, password} = req.body;
   const updatedUser= {
-    board_name 
+    email, password 
   };
 
   knex.select()
