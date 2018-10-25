@@ -8,8 +8,58 @@ https://github.com/goblincore/Donny-Bored-Client
 
 [Live app](https://bored-client.herokuapp.com/)
 
+## Data Schema
 
-### API Documentation
+Bored uses Postgres as it's main database. The data is organized as follows:
+
+* An USERS table which stores our basic user login information:
+```
+CREATE TABLE users(
+      id serial PRIMARY KEY,
+      username varchar(150) NOT NULL,
+      email varchar(200) NOT NULL,
+      password varchar(150) NOT NULL
+);
+```
+
+
+* An IMAGES table which stores the image links in our cloud storage as well as the size, rotation and X,Y coordinates
+
+```
+CREATE TABLE images (
+    id serial PRIMARY KEY,
+    imageURL text NOT NULL,
+    created timestamp DEFAULT now(),
+    position integer [],
+    dimensions integer []
+);
+```
+
+* A MOODBOARDS table which just contains a name and description for the board plus a reference to our USER
+
+```
+CREATE TABLE moodboards (
+    id serial PRIMARY KEY,
+    board_name varchar(200) NOT NULL,
+    description varchar(300) NOT NULL,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE SET NULL
+);
+```
+
+
+* A IMAGES + MOODBOARDS JUNCTION table
+
+This is an associative table that defines the relationship of our images to their respective moodboards
+
+```
+CREATE TABLE images_moodboard(
+    image_id INTEGER NOT NULL REFERENCES images ON DELETE CASCADE,
+    moodboard_id INTEGER NOT NULL REFERENCES moodboards ON DELETE CASCADE
+);
+
+```
+
+## API Documentation
 
 ### Register/Login Endpoints
 
