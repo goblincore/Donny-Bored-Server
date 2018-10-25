@@ -11,9 +11,9 @@ https://github.com/goblincore/Donny-Bored-Client
 
 ### API Documentation
 
-##### Register/Login Endpoints
+### Register/Login Endpoints
 
-###### Register a User 
+#### Register a User 
 
 * Request Type: `POST`
 
@@ -77,9 +77,9 @@ https://github.com/goblincore/Donny-Bored-Client
 
 
 
-##### Moodboard Endpoints
+### Moodboard Endpoints
 
-###### GET all moodboards for a user
+#### GET all moodboards for a user
 
 * Requires valid JSON Webtoken
 
@@ -100,7 +100,7 @@ https://github.com/goblincore/Donny-Bored-Client
 * Response Body will be an array of moodboard objects for that user id. 
 
 
-###### GET images for a specific moodboard
+#### GET images for a specific moodboard
 
 * Requires valid JSON Webtoken
 
