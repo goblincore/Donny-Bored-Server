@@ -117,7 +117,7 @@ https://github.com/goblincore/Donny-Bored-Client
 }
 ```
 
-* Response Body will be an array of objects
+* Response Body will be an array of objects containing the imageURL and positioning coordinates
 
 
 
