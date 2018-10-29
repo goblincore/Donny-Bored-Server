@@ -23,7 +23,7 @@ CREATE TABLE users(
 ```
 
 
-* An IMAGES table which stores the image links in our cloud storage as well as the size, rotation and X,Y coordinates
+* An IMAGES table which contains the image URL to the file in our cloud storage as well as the pixel size, rotation, and X,Y coordinates
 
 ```
 CREATE TABLE images (
@@ -35,7 +35,7 @@ CREATE TABLE images (
 );
 ```
 
-* A MOODBOARDS table which just contains a name and description for the board plus a reference to our USER
+* A MOODBOARDS table which contains a name and description for the board plus a reference to our USER
 
 ```
 CREATE TABLE moodboards (
