@@ -10,7 +10,7 @@ https://github.com/goblincore/Donny-Bored-Client
 
 ## Data Schema
 
-Bored uses Postgres as it's main database. The data is organized as follows:
+Bored uses Postgres as the main database. The data is structured as follows:
 
 * An USERS table which stores our basic user login information:
 ```
